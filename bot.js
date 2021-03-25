@@ -5,15 +5,24 @@ const newUsers = new Discord.Collection();
 let activeUsers = {};
 let activeVoiceUsers = {};
 
+const getDefaultChannel = (guild) => {
+  if(guild.channels.cache.has(guild.id))
+    return guild.channels.cache.get(guild.id)
+  
+  const generalChannel = guild.channels.cache.find(channel => channel.name === "general");
+  if (generalChannel)
+    return generalChannel;
+  return guild.channels.cache.filter(c => c.type === "text" && c.permissionsFor(guild.client.user).has("SEND_MESSAGES")).first()
+}
+
 const cacheUsers = () => client.guilds.cache.forEach(guild => {
-  console.log(guild.members.cache)
   activeUsers[guild.name] = {...activeUsers[guild.name], members: guild.members.cache.map(member => member.user)}
 })
 
 client.on("ready", cacheUsers)
 client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
-client.on('voiceStateUpdate', (oldState, newState) => {
+client.on('voiceStateUpdate', async (oldState, newState) => {
   let channel, verb, state
   if(newState.channelID) {
     verb = 'joined'
@@ -22,13 +31,10 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     verb = 'left'
     state = oldState
   }
+  const user = await client.users.fetch(state.id)
   channel = state.guild.channels.cache.get(state.channelID)
-  console.log(state.member, state, channel)
-  console.log(channel.members)
-  
-  activeUsers[state.guild.name] = {[channel.name]: [...channel.members]}
-  console.log(activeUsers)
-  console.log(`${verb}: ${channel}`)
+  activeUsers[state.guild.name] = {...activeUsers[state.guild.name], [channel.name]: [...channel.members]}
+  getDefaultChannel(state.guild).send(`${user.username} (${user.id}) has voice channel ${verb}: ${channel.name}`)
 })
 
 // client.on('voiceStateUpdate', (oldMember, newMember) => {

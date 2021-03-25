@@ -31,10 +31,5 @@ fetch("/users")
   .then(response => response.json())
   .then(serverUsers => {
     usersList.firstElementChild.remove();
-    console.log('got users: ', serverUsers)
-    Object.entries(serverUsers).forEach(([_, users]) => {
-      console.log(users)
-      users.forEach(appendNewUser)
-    }
-);
+    Object.entries(serverUsers).forEach(([_, {members}]) => members.forEach(appendNewUser))
   });

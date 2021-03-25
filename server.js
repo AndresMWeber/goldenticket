@@ -7,7 +7,8 @@ app.use(express.static("public"));
 app.get("/", (request, response) =>  response.sendFile(__dirname + "/views/index.html"));
 app.get("/dreams", (request, response) => response.json(dreams));
 app.get("/users", (request, response) => {
-  console.log('returning active users:', Object.entries(activeUsers).map(([_, users])=>users.map(u=>u.username)))
+  console.log(activeUsers)
+  console.log('returning active users:', Object.entries(activeUsers).map(([_, {members}])=>members.map(u=>u.username)))
   response.json(activeUsers)
 });
 
