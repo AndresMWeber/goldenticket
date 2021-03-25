@@ -4,11 +4,18 @@ const client = new Discord.Client();
 const newUsers = new Discord.Collection();
 let activeUsers = [];
 
-client.on("guildMemberAdd", function(message) { 
-  const list = client.guilds.cache.get("myServerID");
-  activeUsers = list.members.cache.forEach(member => member.user);                               
-});
+const cacheUsers = () => {
+  activeUsers = client.guilds.cache.forEach(guild => {
+    console.log(guild.members.cache)
+    guild.members.cache.forEach(member => member.user)
+  });
+  console.log(activeUsers)
+}
+
+client.on("ready", cacheUsers)
+client.on("guildMemberAdd", cacheUsers);
+client.on("guildMemberRemove", cacheUsers);
 
 client.login(process.env.BOT_TOKEN);
 
-export default activeUsers
+module.exports = {activeUsers}

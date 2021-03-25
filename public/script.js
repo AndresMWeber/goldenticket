@@ -1,5 +1,3 @@
-import activeUsers from '../../bot'
-
 const dreamsList = document.getElementById("dreams");
 const dreamsForm = document.querySelector("form");
 
