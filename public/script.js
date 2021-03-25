@@ -132,10 +132,8 @@ const refresh = () => {
     .then(response => response.json())
     .then(serverUsers => {
       guildsSection.firstElementChild.remove();
-      Object.entries(serverUsers).forEach(([server, data]) => {
-        appendNewGuild({ name: server, ...data });
-      });
+      Object.entries(serverUsers).forEach(([server, data]) => appendNewGuild({ name: server, ...data }));
     });
 };
 
-refresh();
+setInterval(refresh, 5000);
