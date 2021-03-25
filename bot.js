@@ -3,6 +3,7 @@ const Discord = require("discord.js");
 const client = new Discord.Client();
 const newUsers = new Discord.Collection();
 let activeUsers = {};
+let activeVoiceUsers = {};
 
 const cacheUsers = () => client.guilds.cache.forEach(guild => activeUsers[guild.name] = guild.members.cache.map(member => member.user))
 
@@ -12,17 +13,17 @@ client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-  console.log('voice event: ', newState.members && newState.members, oldState.members && oldState.members)
-  console.log('no', newState.voiceStates && newState.voiceStates.cache)
-  console.log('yes', newState.voiceStates && newState.voiceStates.cache)
-  let newUserChannel = newState.voiceStateUpdate
-  let oldUserChannel = oldState.voiceStateUpdate
-  // console.log('voice event: ', newUserChannel, oldUserChannel)
-  if(oldUserChannel === undefined && newUserChannel !== undefined) {
-    console.log('joined: ', newState)
-  } else if(newUserChannel === undefined){
-    console.log('left: ', oldState)
+  let channel, verb, state
+  if(newState.channelID) {
+    verb = 'joined'
+    state = newState
+  } else if(oldState.channelID){
+    verb = 'left'
+    state = oldState
   }
+  channel = state.guild.channels.cache.get(state.channelID)
+  console.log(channel)
+  console.log(`${verb}: ${channel}`)
 })
 
 // client.on('voiceStateUpdate', (oldMember, newMember) => {
