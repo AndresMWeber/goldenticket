@@ -27,6 +27,7 @@ const cacheUsers = () =>
       .filter(c => ["text", "voice"].includes(c.type))
       .forEach(channel => {
         channels[channel.type] = {
+          ...channels[channel.type],
           [channel.name]: client.channels.cache
             .get(channel.id)
             .members.map(m => m.user)
