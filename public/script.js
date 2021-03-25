@@ -1,23 +1,62 @@
 const guildsSection = document.getElementById("guild-list");
 
-const appendUserList = (users, parent) => {
+const appendChannelList = (channels) => {
+  const accordionId = "accordion";
+  const accordionMain = document.createElement("div");
+  accordionMain.id = accordionId;
+
+  channels.forEach(channel => {
+    const card = document.createElement("div");
+    const cardBody = document.createElement("div");
+    const header = document.createElement("div");
+    const accordion = document.createElement("div");
+    const heading = document.createElement("h5");
+    const headingButton = document.createElement("button");
+
+    const name = channel;
+    card.classList = "card";
+    cardBody.classList = "card-body";
+    header.classList = "card-header";
+    heading.classList = "mb-0";
+    accordion.classList = "collapse show";
+    accordion.id = name;
+    accordion.setAttribute("data-parent", `#${accordionId}`);
+    accordion.setAttribute("aria-labelledby", "headingOne");
+
+    headingButton.classList = "btn btn-link";
+    headingButton.setAttribute("data-toggle", "collapse");
+    headingButton.setAttribute("aria-expanded", "true");
+    headingButton.setAttribute("aria-controls", name);
+    headingButton.setAttribute("data-target", `#${name}`);
+
+    headingButton.innerText = "test";
+    cardBody.innerText = "cardBody stuff";
+
+    card.appendChild(header);
+    header.appendChild(headingButton);
+    accordionMain.appendChild(card);
+  });
+  return accordionMain
+};
+
+const appendUserList = (users) => {
   const memberList = document.createElement("ul");
-  memberList.classList = "widget-user-list"
-  
+  memberList.classList = "widget-user-list";
+
   users.forEach(user => {
     const newListItem = document.createElement("li");
-    const link = document.createElement('a')
+    const link = document.createElement("a");
     const avatar = document.createElement("img");
 
-    link.href = `https://discord.com/users/${user.id}`
+    link.href = `https://discord.com/users/${user.id}`;
     link.setAttribute("target", "_blank");
     avatar.src = user.avatarURL;
 
-    link.appendChild(avatar)
+    link.appendChild(avatar);
     newListItem.appendChild(link);
     memberList.appendChild(newListItem);
-  })
-  parent.appendChild(memberList)
+  });
+  return memberList
 };
 
 const appendNewGuild = ({ name, members, voice }) => {
@@ -29,9 +68,9 @@ const appendNewGuild = ({ name, members, voice }) => {
   const widgetFooter = document.createElement("div");
 
   const newTitle = document.createElement("div");
-  const usersTitle = document.createElement("h6")
+  const usersTitle = document.createElement("h6");
   const memberList = document.createElement("ul");
-  const voiceTitle = document.createElement("h6")
+  const voiceTitle = document.createElement("h6");
   const voiceList = document.createElement("ul");
 
   guildRow.classList = "row";
@@ -39,27 +78,27 @@ const appendNewGuild = ({ name, members, voice }) => {
   widget.classList = "widget card";
   widgetContent.classList = "widget-content card-body";
   widgetFooter.classList = "card-footer text-muted";
-  memberList.classList = "widget-user-list"
+  memberList.classList = "widget-user-list";
   guild.classList = "list-group-item";
-  newTitle.classList = "card-header"
+  newTitle.classList = "card-header";
   newTitle.innerText = name;
-  usersTitle.classList = "card-subtitle mb-2 text-muted"
-  usersTitle.innerText = "Users:"
-  voiceTitle.classList = "card-subtitle mb-2 text-muted"
-  voiceTitle.innerText = "Voice Channels:"
+  usersTitle.classList = "card-subtitle mb-2 text-muted";
+  usersTitle.innerText = "Users:";
+  voiceTitle.classList = "card-subtitle mb-2 text-muted";
+  voiceTitle.innerText = "Voice Channels:";
 
   guildsSection.appendChild(guild);
-  guild.appendChild(guildRow)
+  guild.appendChild(guildRow);
   guildRow.appendChild(guildColumn);
   guildColumn.appendChild(widget);
   widget.appendChild(newTitle);
   widget.appendChild(widgetContent);
   widget.appendChild(widgetFooter);
-  
+  console.log(voice)
   widgetFooter.appendChild(usersTitle);
-  appendUserList(members, widgetFooter)
+  widgetFooter.appendChild(appendUserList(members))
   widgetContent.appendChild(voiceTitle);
-  widgetContent.appendChild(voiceList);
+  widgetContent.appendChild(appendChannelList(voice));
 };
 
 fetch("/users")
