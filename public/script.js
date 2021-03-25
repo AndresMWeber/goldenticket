@@ -4,35 +4,42 @@ const appendChannelList = (channels) => {
   const accordionId = "accordion";
   const accordionMain = document.createElement("div");
   accordionMain.id = accordionId;
-
-  channels.forEach(channel => {
+  Object.entries(channels).forEach(([name, users]) => {
+    console.log(users)
+    const headingId = `${name}-heading`
+    const collapseId = `${name}-collapse`
+    
     const card = document.createElement("div");
     const cardBody = document.createElement("div");
     const header = document.createElement("div");
-    const accordion = document.createElement("div");
+    const collapse = document.createElement("div");
     const heading = document.createElement("h5");
     const headingButton = document.createElement("button");
 
-    const name = channel;
     card.classList = "card";
     cardBody.classList = "card-body";
+    
+    header.id = headingId
     header.classList = "card-header";
     heading.classList = "mb-0";
-    accordion.classList = "collapse show";
-    accordion.id = name;
-    accordion.setAttribute("data-parent", `#${accordionId}`);
-    accordion.setAttribute("aria-labelledby", "headingOne");
+    
+    collapse.id = collapseId;
+    collapse.classList = "collapse show";
+    collapse.setAttribute("data-parent", `#${accordionId}`);
+    collapse.setAttribute("aria-labelledby", headingId);
 
-    headingButton.classList = "btn btn-link";
+    headingButton.classList = "btn btn-link collapsed";
     headingButton.setAttribute("data-toggle", "collapse");
-    headingButton.setAttribute("aria-expanded", "true");
-    headingButton.setAttribute("aria-controls", name);
-    headingButton.setAttribute("data-target", `#${name}`);
+    headingButton.setAttribute("aria-expanded", "false");
+    headingButton.setAttribute("aria-controls", collapseId);
+    headingButton.setAttribute("data-target", `#${collapseId}`);
 
-    headingButton.innerText = "test";
+    headingButton.innerText = name;
     cardBody.innerText = "cardBody stuff";
 
     card.appendChild(header);
+    card.appendChild(collapse)
+    collapse.appendChild(cardBody)
     header.appendChild(headingButton);
     accordionMain.appendChild(card);
   });
