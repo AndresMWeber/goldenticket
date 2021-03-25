@@ -35,7 +35,7 @@ const appendChannelList = (channels) => {
     headingButton.setAttribute("data-target", `#${collapseId}`);
 
     headingButton.innerText = name;
-    cardBody.innerText = "cardBody stuff";
+    cardBody.appendChild(appendUserList(users))
 
     card.appendChild(header);
     card.appendChild(collapse)
