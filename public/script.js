@@ -32,7 +32,7 @@ fetch("/users")
   .then(serverUsers => {
     usersList.firstElementChild.remove();
     console.log(serverUsers)
-    Object.entries(serverUsers).forEach(users => {
+    Object.entries(serverUsers).forEach(([_, users]) => {
       console.log(users)
       users.forEach(appendNewUser)
     }
