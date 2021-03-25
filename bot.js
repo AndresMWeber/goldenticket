@@ -14,15 +14,15 @@ client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-  console.log('voice event: ', newState, oldState)
-  let newUserChannel = newState.voiceChannel
-  let oldUserChannel = oldState.voiceChannel
-  console.log('voice event: ', newUserChannel, oldUserChannel)
+  console.log('voice event: ', newState.members.cache, oldState.members.cache)
+  console.log('yes', newState.voiceStates.c)
+  let newUserChannel = newState.voiceStateUpdate
+  let oldUserChannel = oldState.voiceStateUpdate
+  // console.log('voice event: ', newUserChannel, oldUserChannel)
   if(oldUserChannel === undefined && newUserChannel !== undefined) {
-    console.log('joined: ', newMember)
-
+    console.log('joined: ', newState)
   } else if(newUserChannel === undefined){
-    console.log('left: ', oldMember)
+    console.log('left: ', oldState)
   }
 })
 
