@@ -51,7 +51,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
     }
   };
   getDefaultChannel(state.guild).send(
-    `${user.username} (${user.id}) has voice channel ${verb}: ${channel.name}`
+    `${user.username} (${user.id}) has ${verb} voice channel: ${channel.name}`
   );
 });
 

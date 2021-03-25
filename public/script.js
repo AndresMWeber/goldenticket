@@ -2,13 +2,18 @@ const guildsSection = document.getElementById("guild-list");
 
 const appendNewUser = (user, userList) => {
   const newListItem = document.createElement("li");
+  const link = document.createElement('a')
   const username = document.createElement("span");
   const avatar = document.createElement("img");
-  console.log("processing user", user);
+  
+  link.href = `https://discord.com/users/${user.id}`
+  link.setAttribute("target", "_blank");
   avatar.src = user.avatarURL;
   username.innerText = user.username;
+  
+  link.appendChild(avatar)
   newListItem.appendChild(username);
-  newListItem.appendChild(avatar);
+  newListItem.appendChild(link);
   userList.appendChild(newListItem);
 };
 
@@ -27,20 +32,20 @@ const appendNewGuild = ({ name, members, voice }) => {
   guildColumn.classList = "col-md-5";
   widget.classList = "widget";
   widgetContent.classList = "widget-content";
+  memberList.clasSList = "widget-user-list"
   guild.classList = "list-group-item";
   newTitle.innerText = name;
 
   members.map(member => appendNewUser(member, memberList));
 
-  guild.appendChild(newTitle);
-  guild.appendChild(memberList);
-  guild.appendChild(voiceList);
-
-  guildsSection.appendChild(guildRow);
+  guildsSection.appendChild(guild);
+  guild.appendChild(guildRow)
   guildRow.appendChild(guildColumn);
   guildColumn.appendChild(widget);
   widget.appendChild(widgetContent);
-  widgetContent.appendChild(guild);
+  widgetContent.appendChild(newTitle);
+  widgetContent.appendChild(memberList);
+  widgetContent.appendChild(voiceList);
 };
 
 fetch("/users")
