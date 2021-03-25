@@ -22,15 +22,23 @@ const getDefaultChannel = guild => {
 
 const cacheUsers = () =>
   client.guilds.cache.forEach(guild => {
-    const channels = {}
-    guild.channels.cache.filter(c=>['text', 'voice'].includes(c.type)).forEach(channel=>{
-        channels[channel.type] = {[channel.name]: client.channels.cache.get(channel.id).members} 
-    })
-    console.log(channels)
+    const channels = {};
+    guild.channels.cache
+      .filter(c => ["text", "voice"].includes(c.type))
+      .forEach(channel => {
+        channels[channel.type] = {
+          [channel.name]: client.channels.cache
+            .get(channel.id)
+            .members.map(m => m.user)
+        };
+      });
+    
     activeUsers[guild.name] = {
       ...activeUsers[guild.name],
-      members: guild.members.cache.map(member => member.user)
+      members: guild.members.cache.map(member => member.user),
+      channels
     };
+    console.log(activeUsers)
   });
 
 client.on("ready", cacheUsers);
@@ -49,9 +57,12 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
   channel = state.guild.channels.cache.get(state.channelID);
   activeUsers[state.guild.name] = {
     ...activeUsers[state.guild.name],
-    voice: {
-      ...activeUsers[state.guild.name].voice,
-      [channel.name]: channel.members
+    channels: {
+      ...activeUsers[state.guild.name].channels,
+      voice: {
+        ...activeUsers[state.guild.name].channels.voice,
+        [channel.name]: channel.members
+      }
     }
   };
   getDefaultChannel(state.guild).send(

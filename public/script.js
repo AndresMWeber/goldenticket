@@ -1,14 +1,15 @@
 const guildsSection = document.getElementById("guild-list");
 
-const appendChannelList = (channels) => {
+const appendChannelList = channels => {
+  console.log(channels);
   const accordionId = "accordion";
   const accordionMain = document.createElement("div");
   accordionMain.id = accordionId;
   Object.entries(channels).forEach(([name, users]) => {
-    console.log(users)
-    const headingId = `${name}-heading`
-    const collapseId = `${name}-collapse`
-    
+    console.log(users);
+    const headingId = `${name}-heading`;
+    const collapseId = `${name}-collapse`;
+
     const card = document.createElement("div");
     const cardBody = document.createElement("div");
     const header = document.createElement("div");
@@ -18,35 +19,35 @@ const appendChannelList = (channels) => {
 
     card.classList = "card";
     cardBody.classList = "card-body";
-    
-    header.id = headingId
+
+    header.id = headingId;
     header.classList = "card-header";
     heading.classList = "mb-0";
-    
+
     collapse.id = collapseId;
     collapse.classList = "collapse show";
     collapse.setAttribute("data-parent", `#${accordionId}`);
     collapse.setAttribute("aria-labelledby", headingId);
 
-    headingButton.classList = "btn btn-link collapsed";
+    headingButton.classList = "btn btn-link";
     headingButton.setAttribute("data-toggle", "collapse");
     headingButton.setAttribute("aria-expanded", "false");
     headingButton.setAttribute("aria-controls", collapseId);
     headingButton.setAttribute("data-target", `#${collapseId}`);
 
     headingButton.innerText = name;
-    cardBody.appendChild(appendUserList(users))
+    cardBody.appendChild(appendUserList(users));
 
     card.appendChild(header);
-    card.appendChild(collapse)
-    collapse.appendChild(cardBody)
+    card.appendChild(collapse);
+    collapse.appendChild(cardBody);
     header.appendChild(headingButton);
     accordionMain.appendChild(card);
   });
-  return accordionMain
+  return accordionMain;
 };
 
-const appendUserList = (users) => {
+const appendUserList = users => {
   const memberList = document.createElement("ul");
   memberList.classList = "widget-user-list";
 
@@ -63,10 +64,12 @@ const appendUserList = (users) => {
     newListItem.appendChild(link);
     memberList.appendChild(newListItem);
   });
-  return memberList
+  return memberList;
 };
 
-const appendNewGuild = ({ name, members, voice }) => {
+const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
+  console.log("adding guild:", name, members, text, voice);
+
   const guild = document.createElement("li");
   const guildRow = document.createElement("div");
   const guildColumn = document.createElement("div");
@@ -78,6 +81,7 @@ const appendNewGuild = ({ name, members, voice }) => {
   const usersTitle = document.createElement("h6");
   const memberList = document.createElement("ul");
   const voiceTitle = document.createElement("h6");
+  const textTitle = document.createElement("h6");
   const voiceList = document.createElement("ul");
 
   guildRow.classList = "row";
@@ -93,6 +97,8 @@ const appendNewGuild = ({ name, members, voice }) => {
   usersTitle.innerText = "Users:";
   voiceTitle.classList = "card-subtitle mb-2 text-muted";
   voiceTitle.innerText = "Voice Channels:";
+  textTitle.classList = "card-subtitle mb-2 text-muted";
+  textTitle.innerText = "Text Channels:";
 
   guildsSection.appendChild(guild);
   guild.appendChild(guildRow);
@@ -101,11 +107,13 @@ const appendNewGuild = ({ name, members, voice }) => {
   widget.appendChild(newTitle);
   widget.appendChild(widgetContent);
   widget.appendChild(widgetFooter);
-  console.log(voice)
+  console.log(voice);
   widgetFooter.appendChild(usersTitle);
-  widgetFooter.appendChild(appendUserList(members))
+  widgetFooter.appendChild(appendUserList(members));
   widgetContent.appendChild(voiceTitle);
   widgetContent.appendChild(appendChannelList(voice));
+  widgetContent.appendChild(textTitle);
+  widgetContent.appendChild(appendChannelList(text));
 };
 
 fetch("/users")
