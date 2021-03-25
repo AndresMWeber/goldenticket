@@ -12,8 +12,6 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link id="favicon" rel="icon" href="https://glitch.com/edit/favicon-app.ico" type="image/x-icon">
-    <!-- import the webpage's stylesheet -->
-    <link rel="stylesheet" href="/style.css">
 
     <!-- import the webpage's client-side javascript file -->
     <script src="/script.js" defer></script>
@@ -28,17 +26,15 @@
 
       <p>Tell me your hopes and dreams:</p>
 
-      <form>
-        <label>
-          New Dream
-          <input name="dream" type="text" maxlength="100" required placeholder="Dreams!">
-        </label>
-        <button type="submit" id="submit-dream">Add Dream</button>
-      </form>
-
       <section class="dreams">
-        <ul id="dreams">
+        <ul id="dreamList">
           <em>loading dreams&hellip;</em>
+        </ul>
+      </section>
+      
+      <section class="users">
+        <ul id="userList">
+          <em>loading users&hellip;</em>
         </ul>
       </section>
     </main>

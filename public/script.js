@@ -1,10 +1,15 @@
-const dreamsList = document.getElementById("dreams");
-const dreamsForm = document.querySelector("form");
+const dreamsList = document.getElementById("dreamList");
+const usersList = document.getElementById("userList");
 
 function appendNewDream(dream) {
   const newListItem = document.createElement("li");
   newListItem.innerText = dream;
   dreamsList.appendChild(newListItem);
+}
+function appendNewUser(user) {
+  const newListItem = document.createElement("li");
+  newListItem.innerText = user;
+  usersList.appendChild(newListItem);
 }
 
 fetch("/dreams")
@@ -12,14 +17,6 @@ fetch("/dreams")
   .then(dreams => {
     dreamsList.firstElementChild.remove();
     dreams.forEach(appendNewDream);
-    dreamsForm.addEventListener("submit", event => {
-      event.preventDefault();
-      let newDream = dreamsForm.elements.dream.value;
-      dreams.push(newDream);
-      appendNewDream(newDream);
-      dreamsForm.reset();
-      dreamsForm.elements.dream.focus();
-    });
   });
 
 
@@ -27,5 +24,5 @@ fetch("/users")
   .then(response => response.json())
   .then(users => {
     dreamsList.firstElementChild.remove();
-    users.forEach(appendNewDream);
+    users.map(user=>user.username).forEach(appendNewUser);
   });

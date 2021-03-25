@@ -5,11 +5,8 @@ const newUsers = new Discord.Collection();
 let activeUsers = [];
 
 const cacheUsers = () => {
-  activeUsers = client.guilds.cache.forEach(guild => {
-    console.log(guild.members.cache)
-    guild.members.cache.forEach(member => member.user)
-  });
-  console.log(activeUsers)
+  activeUsers = client.guilds.cache.forEach(guild => guild.members.cache.map(member => member.user));
+  console.log(activeUsers);
 }
 
 client.on("ready", cacheUsers)
