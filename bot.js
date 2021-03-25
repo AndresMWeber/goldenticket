@@ -4,10 +4,8 @@ const client = new Discord.Client();
 const newUsers = new Discord.Collection();
 let activeUsers = {};
 
-const cacheUsers = () => {
-  client.guilds.cache.forEach(guild => activeUsers[guild.name] = guild.members.cache.map(member => member.user));
-  console.log(activeUsers);
-}
+const cacheUsers = () => client.guilds.cache.forEach(guild => activeUsers[guild.name] = guild.members.cache.map(member => member.user))
+
 
 client.on("ready", cacheUsers)
 client.on("guildMemberAdd", cacheUsers);
@@ -15,6 +13,7 @@ client.on("guildMemberRemove", cacheUsers);
 
 client.on('voiceStateUpdate', (oldState, newState) => {
   console.log('voice event: ', newState.members && newState.members, oldState.members && oldState.members)
+  console.log('no', newState.voiceStates && newState.voiceStates.cache)
   console.log('yes', newState.voiceStates && newState.voiceStates.cache)
   let newUserChannel = newState.voiceStateUpdate
   let oldUserChannel = oldState.voiceStateUpdate
