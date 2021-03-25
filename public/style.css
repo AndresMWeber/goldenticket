@@ -1,14 +1,4 @@
-body{
-    background:#dcdcdc;
-    margin-top:20px;
-}
-.widget {
-    background: #fff;
-    margin-bottom: .75rem;
-    display: block;
-    position: relative;
-    margin-top:40px;
-}
+
 .widget-user-list > li {
     display: inline-block;
 }
@@ -38,9 +28,6 @@ body{
     -moz-border-radius: 2.25rem;
     border-radius: 2.25rem;
 }
-.widget-user-list > li img:hover{
-    filter: brightness(110%);
-}
 .widget-user-list > li a img {
     display: block;
     max-width: 100%;
@@ -49,8 +36,6 @@ body{
     background: #c7c7cc;
     color: #fff;
 }
-.widget-content, .widget-footer {
-    padding: .625rem;
-    background: #fff;
-    position: relative;
+.widget-user-list > li img:hover{
+    filter: brightness(110%);
 }

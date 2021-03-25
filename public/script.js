@@ -26,27 +26,39 @@ const appendNewGuild = ({ name, members, voice }) => {
   const guildColumn = document.createElement("div");
   const widget = document.createElement("div");
   const widgetContent = document.createElement("div");
+  const widgetFooter = document.createElement("div");
 
-  const newTitle = document.createElement("h3");
+  const newTitle = document.createElement("div");
+  const usersTitle = document.createElement("h6")
   const memberList = document.createElement("ul");
+  const voiceTitle = document.createElement("h6")
   const voiceList = document.createElement("ul");
 
   guildRow.classList = "row";
   guildColumn.classList = "col-md-5";
-  widget.classList = "widget";
-  widgetContent.classList = "widget-content";
+  widget.classList = "widget card";
+  widgetContent.classList = "widget-content card-body";
+  widgetFooter.classList = "card-footer text-muted";
   memberList.classList = "widget-user-list"
   guild.classList = "list-group-item";
+  newTitle.classList = "card-header"
   newTitle.innerText = name;
-  
+  usersTitle.classList = "card-subtitle mb-2 text-muted"
+  usersTitle.innerText = "Users:"
+  voiceTitle.classList = "card-subtitle mb-2 text-muted"
+  voiceTitle.innerText = "Voice Channels:"
 
   guildsSection.appendChild(guild);
   guild.appendChild(guildRow)
   guildRow.appendChild(guildColumn);
   guildColumn.appendChild(widget);
+  widget.appendChild(newTitle);
   widget.appendChild(widgetContent);
-  widgetContent.appendChild(newTitle);
-  appendUserList(members, widgetContent)
+  widget.appendChild(widgetFooter);
+  
+  widgetFooter.appendChild(usersTitle);
+  appendUserList(members, widgetFooter)
+  widgetContent.appendChild(voiceTitle);
   widgetContent.appendChild(voiceList);
 };
 
