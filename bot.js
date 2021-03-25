@@ -5,13 +5,14 @@ const newUsers = new Discord.Collection();
 let activeUsers = {};
 let activeVoiceUsers = {};
 
-const cacheUsers = () => client.guilds.cache.forEach(guild => activeUsers[guild.name] = guild.members.cache.map(member => member.user))
-
+const cacheUsers = () => client.guilds.cache.forEach(guild => {
+  console.log(guild.members.cache)
+  activeUsers[guild.name] = {...activeUsers[guild.name], members: guild.members.cache.map(member => member.user)}
+})
 
 client.on("ready", cacheUsers)
 client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
-
 client.on('voiceStateUpdate', (oldState, newState) => {
   let channel, verb, state
   if(newState.channelID) {
@@ -22,7 +23,11 @@ client.on('voiceStateUpdate', (oldState, newState) => {
     state = oldState
   }
   channel = state.guild.channels.cache.get(state.channelID)
-  console.log(channel)
+  console.log(state.member, state, channel)
+  console.log(channel.members)
+  
+  activeUsers[state.guild.name] = {[channel.name]: [...channel.members]}
+  console.log(activeUsers)
   console.log(`${verb}: ${channel}`)
 })
 
