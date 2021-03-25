@@ -6,9 +6,16 @@ function appendNewDream(dream) {
   newListItem.innerText = dream;
   dreamsList.appendChild(newListItem);
 }
+
 function appendNewUser(user) {
   const newListItem = document.createElement("li");
-  newListItem.innerText = user;
+  const username = document.createElement("span");
+  const avatar = document.createElement("img");
+  console.log('processing user', user)
+  avatar.src = user.avatarURL
+  username.innerText = user.username
+  newListItem.appendChild(username);
+  newListItem.appendChild(avatar);
   usersList.appendChild(newListItem);
 }
 
@@ -22,7 +29,12 @@ fetch("/dreams")
 
 fetch("/users")
   .then(response => response.json())
-  .then(users => {
-    dreamsList.firstElementChild.remove();
-    users.map(user=>user.username).forEach(appendNewUser);
+  .then(serverUsers => {
+    usersList.firstElementChild.remove();
+    console.log(serverUsers)
+    Object.entries(serverUsers).forEach(users => {
+      console.log(users)
+      users.forEach(appendNewUser)
+    }
+);
   });

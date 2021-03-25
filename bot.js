@@ -2,10 +2,10 @@ const Discord = require("discord.js");
 
 const client = new Discord.Client();
 const newUsers = new Discord.Collection();
-let activeUsers = [];
+let activeUsers = {};
 
 const cacheUsers = () => {
-  activeUsers = client.guilds.cache.forEach(guild => guild.members.cache.map(member => member.user));
+  client.guilds.cache.forEach(guild => activeUsers[guild.name] = guild.members.cache.map(member => member.user));
   console.log(activeUsers);
 }
 
