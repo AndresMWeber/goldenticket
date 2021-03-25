@@ -38,14 +38,14 @@ const cacheUsers = () =>
       members: guild.members.cache.map(member => member.user),
       channels
     };
-    console.log(activeUsers)
+    console.log('cached users:', activeUsers)
   });
 
 client.on("ready", cacheUsers);
 client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
 client.on("voiceStateUpdate", async (oldState, newState) => {
-  let channel, verb, state;
+  let verb, state;
   if (newState.channelID) {
     verb = "joined";
     state = newState;
@@ -54,17 +54,8 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
     state = oldState;
   }
   const user = await client.users.fetch(state.id);
-  channel = state.guild.channels.cache.get(state.channelID);
-  activeUsers[state.guild.name] = {
-    ...activeUsers[state.guild.name],
-    channels: {
-      ...activeUsers[state.guild.name].channels,
-      voice: {
-        ...activeUsers[state.guild.name].channels.voice,
-        [channel.name]: channel.members
-      }
-    }
-  };
+  const channel = state.guild.channels.cache.get(state.channelID);
+  cacheUsers()
   getDefaultChannel(state.guild).send(
     `${user.username} (${user.id}) has ${verb} voice channel: ${channel.name}`
   );

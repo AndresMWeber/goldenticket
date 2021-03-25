@@ -1,12 +1,11 @@
 const guildsSection = document.getElementById("guild-list");
 
 const appendChannelList = channels => {
-  console.log(channels);
   const accordionId = "accordion";
   const accordionMain = document.createElement("div");
+  
   accordionMain.id = accordionId;
   Object.entries(channels).forEach(([name, users]) => {
-    console.log(users);
     const headingId = `${name}-heading`;
     const collapseId = `${name}-collapse`;
 
@@ -80,6 +79,7 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   const newTitle = document.createElement("div");
   const usersTitle = document.createElement("h6");
   const memberList = document.createElement("ul");
+  const channelList = document.createElement("ul");
   const voiceTitle = document.createElement("h6");
   const textTitle = document.createElement("h6");
   const voiceList = document.createElement("ul");
@@ -110,10 +110,13 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   console.log(voice);
   widgetFooter.appendChild(usersTitle);
   widgetFooter.appendChild(appendUserList(members));
-  widgetContent.appendChild(voiceTitle);
-  widgetContent.appendChild(appendChannelList(voice));
-  widgetContent.appendChild(textTitle);
-  widgetContent.appendChild(appendChannelList(text));
+  
+  channelList.appendChild(voiceTitle);
+  channelList.appendChild(appendChannelList(voice));
+  channelList.appendChild(textTitle);
+  channelList.appendChild(appendChannelList(text));
+  
+  widgetContent.appendChild(channelList);
 };
 
 fetch("/users")
