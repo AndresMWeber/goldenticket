@@ -32,13 +32,13 @@ const cacheUsers = () =>
             .members.map(m => m.user)
         };
       });
-    
+
     activeUsers[guild.name] = {
       ...activeUsers[guild.name],
       members: guild.members.cache.map(member => member.user),
       channels
     };
-    console.log('cached users:', activeUsers)
+    console.log("cached users:", activeUsers);
   });
 
 client.on("ready", cacheUsers);
@@ -55,7 +55,7 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
   }
   const user = await client.users.fetch(state.id);
   const channel = state.guild.channels.cache.get(state.channelID);
-  cacheUsers()
+  cacheUsers();
   getDefaultChannel(state.guild).send(
     `${user.username} (${user.id}) has ${verb} voice channel: ${channel.name}`
   );
@@ -63,4 +63,4 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
 
 client.login(process.env.BOT_TOKEN);
 
-module.exports = { activeUsers };
+module.exports = { activeUsers, cacheUsers };

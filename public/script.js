@@ -3,7 +3,6 @@ const guildsSection = document.getElementById("guild-list");
 const appendChannelList = channels => {
   const accordionId = "accordion";
   const accordionMain = document.createElement("div");
-  
   accordionMain.id = accordionId;
   Object.entries(channels).forEach(([name, users]) => {
     const headingId = `${name}-heading`;
@@ -67,8 +66,6 @@ const appendUserList = users => {
 };
 
 const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
-  console.log("adding guild:", name, members, text, voice);
-
   const guild = document.createElement("li");
   const guildRow = document.createElement("div");
   const guildColumn = document.createElement("div");
@@ -107,7 +104,7 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   widget.appendChild(newTitle);
   widget.appendChild(widgetContent);
   widget.appendChild(widgetFooter);
-  console.log(voice);
+  
   widgetFooter.appendChild(usersTitle);
   widgetFooter.appendChild(appendUserList(members));
   
