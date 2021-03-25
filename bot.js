@@ -14,8 +14,8 @@ client.on("guildMemberAdd", cacheUsers);
 client.on("guildMemberRemove", cacheUsers);
 
 client.on('voiceStateUpdate', (oldState, newState) => {
-  console.log('voice event: ', newState.members.cache, oldState.members.cache)
-  console.log('yes', newState.voiceStates.c)
+  console.log('voice event: ', newState.members && newState.members, oldState.members && oldState.members)
+  console.log('yes', newState.voiceStates && newState.voiceStates.cache)
   let newUserChannel = newState.voiceStateUpdate
   let oldUserChannel = oldState.voiceStateUpdate
   // console.log('voice event: ', newUserChannel, oldUserChannel)
