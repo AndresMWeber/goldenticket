@@ -38,6 +38,9 @@ body{
     -moz-border-radius: 2.25rem;
     border-radius: 2.25rem;
 }
+.widget-user-list > li img:hover{
+    filter: brightness(110%);
+}
 .widget-user-list > li a img {
     display: block;
     max-width: 100%;
