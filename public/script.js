@@ -90,17 +90,18 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   guildRow.classList = "row";
   guildColumn.classList = "col";
   widget.classList = "widget card";
+  usersTitle.classList = "card-subtitle m-2 text-muted";
+  voiceTitle.classList = "card-subtitle m-2 text-muted";
+  textTitle.classList = "card-subtitle m-2 text-muted";
   widgetContent.classList = "widget-content card-body";
   widgetFooter.classList = "card-footer text-muted";
   memberList.classList = "widget-user-list";
   guild.classList = "list-group-item";
   newTitle.classList = "card-header";
+  
   newTitle.innerText = name;
-  usersTitle.classList = "card-subtitle mb-2 text-muted";
   usersTitle.innerText = "Users:";
-  voiceTitle.classList = "card-subtitle mb-2 text-muted";
   voiceTitle.innerText = "Voice Channels:";
-  textTitle.classList = "card-subtitle mb-2 text-muted";
   textTitle.innerText = "Text Channels:";
 
   guildsSection.appendChild(guild);
