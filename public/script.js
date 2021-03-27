@@ -123,17 +123,21 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   widgetContent.appendChild(channelList);
 };
 
+let cachedUsers;
+
 const refresh = () => {
   fetch("/users")
     .then(response => response.json())
     .then(serverUsers => {
-      
-      removeAllChildNodes(guildsSection)
-      const p = document.createElement('p')
-      p.innerText = 'Loading...'
-      guildsSection.appendChild(p)
-      guildsSection.firstElementChild.remove();
-      Object.entries(serverUsers).forEach(([server, data]) => appendNewGuild({ name: server, ...data }));
+      if (JSON.stringify(cachedUsers) !== JSON.stringify(serverUsers)) {
+          cachedUsers = serverUsers
+          removeAllChildNodes(guildsSection)
+          const p = document.createElement('p')
+          p.innerText = 'Loading...'
+          guildsSection.appendChild(p)
+          guildsSection.firstElementChild.remove();
+          Object.entries(serverUsers).forEach(([server, data]) => appendNewGuild({ name: server, ...data }));
+      }
     });
 };
 

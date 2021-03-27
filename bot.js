@@ -56,11 +56,22 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
   }
   const user = await client.users.fetch(state.id);
   const channel = state.guild.channels.cache.get(state.channelID);
-  cacheUsers();
-  getDefaultChannel(state.guild).send(
-    `${user.username} (${user.id}) has ${verb} voice channel: ${channel.name}`
-  );
+  await cacheUsers();
+  generateMessage(user, verb, getDefaultChannel(state.guild))
 });
+
+
+const generateMessage = (user, verb, channel) => {
+  const exampleEmbed = new Discord.MessageEmbed()
+    .setColor('#0099ff')
+    .setTitle('Voice Channel Event')
+    .setURL(`https://discord.com/users/${user.id}`)
+    .addFields(
+      { name: `${channel.name}: Voice Channel Event`, value: `${user.username} has ${verb} voice` },
+    )
+    .setTimestamp()
+  channel.send(exampleEmbed);
+}
 
 client.login(process.env.BOT_TOKEN);
 
