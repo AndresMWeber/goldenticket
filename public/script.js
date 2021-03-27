@@ -124,16 +124,17 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
 };
 
 const refresh = () => {
-  removeAllChildNodes(guildsSection)
-  const p = document.createElement('p')
-  p.innerText = 'Loading...'
-  guildsSection.appendChild(p)
   fetch("/users")
     .then(response => response.json())
     .then(serverUsers => {
+      
+      removeAllChildNodes(guildsSection)
+      const p = document.createElement('p')
+      p.innerText = 'Loading...'
+      guildsSection.appendChild(p)
       guildsSection.firstElementChild.remove();
       Object.entries(serverUsers).forEach(([server, data]) => appendNewGuild({ name: server, ...data }));
     });
 };
 
-setInterval(refresh, 5000);
+setInterval(refresh, 30000);
