@@ -5,6 +5,10 @@ ul {
   margin: 0;
   padding: 0;
 }
+.card {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 .widget-user-list > li {
     display: inline-block;
 }

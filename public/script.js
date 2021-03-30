@@ -117,8 +117,8 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
 
   channelList.appendChild(voiceTitle);
   channelList.appendChild(appendChannelList(voice));
-  channelList.appendChild(textTitle);
-  channelList.appendChild(appendChannelList(text));
+  // channelList.appendChild(textTitle);
+  // channelList.appendChild(appendChannelList(text));
 
   widgetContent.appendChild(channelList);
 };
