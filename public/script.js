@@ -1,9 +1,9 @@
 const guildsSection = document.getElementById("guild-list");
 
 function removeAllChildNodes(parent) {
-    while (parent.firstChild) {
-        parent.removeChild(parent.firstChild);
-    }
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 const appendChannelList = channels => {
@@ -98,7 +98,7 @@ const appendNewGuild = ({ name, members, channels: { voice, text } }) => {
   memberList.classList = "widget-user-list";
   guild.classList = "list-group-item";
   newTitle.classList = "card-header";
-  
+
   newTitle.innerText = name;
   usersTitle.innerText = "Users:";
   voiceTitle.innerText = "Voice Channels:";
@@ -129,16 +129,20 @@ const refresh = () => {
   fetch("/users")
     .then(response => response.json())
     .then(serverUsers => {
+      console.log(JSON.stringify(cachedUsers) !== JSON.stringify(serverUsers));
       if (JSON.stringify(cachedUsers) !== JSON.stringify(serverUsers)) {
-          cachedUsers = serverUsers
-          removeAllChildNodes(guildsSection)
-          const p = document.createElement('p')
-          p.innerText = 'Loading...'
-          guildsSection.appendChild(p)
-          guildsSection.firstElementChild.remove();
-          Object.entries(serverUsers).forEach(([server, data]) => appendNewGuild({ name: server, ...data }));
+        cachedUsers = serverUsers;
+        removeAllChildNodes(guildsSection);
+        const p = document.createElement("p");
+        p.innerText = "Loading...";
+        guildsSection.appendChild(p);
+        guildsSection.firstElementChild.remove();
+        Object.entries(serverUsers).forEach(([server, data]) =>
+          appendNewGuild({ name: server, ...data })
+        );
       }
     });
 };
 
+refresh();
 setInterval(refresh, 30000);
