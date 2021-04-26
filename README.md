@@ -29,7 +29,7 @@
     <code>
     <a href="https://goldenticket.andresmweber.com/"><img width=14px alt="Glich Favicon" src="https://glitch.com/favicon.ico" /> Live Demo</a>
     ·
-    <a href="https://glitch.com/edit/#!/goldenticket?previewSize=100&attributionHidden=false&sidebarCollapsed=false&path=README.md&previewFirst=false"><img width=14px alt="Source Favicon" src="https://glitch.com/favicon.ico" /> Source Code</a>
+    <a href="https://glitch.com/edit/#!/goldenticket"><img width=14px alt="Source Favicon" src="https://glitch.com/favicon.ico" /> Source on Glitch</a>
     ·
     <a href="#installation">Installation</a>
     </code>
