@@ -67,6 +67,7 @@ Click `Show` in the header to see your app live. Updates to your code will insta
 ## ⛏️ Tech Stack <a name = "tech"></a>
 
 - [NodeJS](https://www.nodejs.org/) - Web Server
+- [Glitch](https://glitch.io/) - CI/CD + Hosting
 - [Discord](https://discord.com/) - Discord API
 - [CSS](https://www.w3.org/Style/CSS//) - Styling
 - [Bootstrap](https://www.w3.org/Style/CSS//) - CSS Framework
