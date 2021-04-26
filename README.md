@@ -35,13 +35,6 @@
     </code>
 </h3>
 
-<div align="center">
-    <a href="https://www.npmjs.com/package/4dsnake">
-        <img alt="NPM" src="https://nodei.co/npm/4dsnake.png?compact=true" />
-    </a>
-</div>
-
-
 ## 📝 Table of Contents
 
 - [Installation](#installation)
