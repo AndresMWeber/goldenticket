@@ -1,0 +1,6 @@
+.env
+shrinkwrap.yaml
+.glitch*
+.viminfo
+.config/
+.node*
